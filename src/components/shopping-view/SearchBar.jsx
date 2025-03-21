@@ -51,44 +51,45 @@ const SearchBar = () => {
   }, []);
 
   // Add-to-Cart handler with sold-out and stock checks
-  const handleAddtoCart = (productId, totalStock) => {
-    // Check if product is sold out
-    if (totalStock === 0) {
-      toast({
-        title: "This product is sold out",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    const currentCartItems = cartItems?.items || [];
-    const index = currentCartItems.findIndex((item) => item.productId === productId);
-
-    // If product exists in cart, check if adding one more exceeds the stock
-    if (index > -1) {
-      const currentQuantity = currentCartItems[index].quantity;
-      if (currentQuantity + 1 > totalStock) {
-        toast({
-          title: `Only ${currentQuantity} unit(s) can be added for this item`,
-          variant: "destructive",
-        });
-        return;
-      }
-    }
-
-    // Proceed to add to cart
-    dispatch(
-      addToCart({
-        userId: user?.id,
-        productId: productId,
-        quantity: 1,
-      })
-    ).then((data) => {
-      if (data?.payload?.success) {
-        dispatch(fetchCartItems(user?.id));
-        toast({ title: "Product added to cart" });
-      }
-    });
+  function handleAddToCart(getCurrentProductId, getTotalStock) {
+     // Add logging to see what we're sending to the backend
+     console.log("Adding to cart with payload:", {
+       userId: user?._id,
+       productId: getCurrentProductId,
+       quantity: 1,
+     });
+ 
+     let getCartItemsArray = cartItems.items || [];
+ 
+     if (getCartItemsArray.length) {
+       const indexOfCurrentItem = getCartItemsArray.findIndex(
+         (item) => item.productId === getCurrentProductId
+       );
+       if (indexOfCurrentItem > -1) {
+         const getQuantity = getCartItemsArray[indexOfCurrentItem].quantity;
+         if (getQuantity + 1 > getTotalStock) {
+           toast({
+             title: `Only ${getQuantity} quantity can be added for this item`,
+             variant: "destructive",
+           });
+           return;
+         }
+       }
+     }
+     dispatch(
+       addToCart({
+         userId: user?.id, // Ensure user._id is defined
+         productId: getCurrentProductId, // Should be productItem._id from your productList
+         quantity: 1,
+       })
+     ).then((data) => {
+       if (data?.payload?.success) {
+         dispatch(fetchCartItems(user?.id));
+         toast({
+           title: "Product is added to cart",
+         });
+       }
+     });
   };
 
   return (
@@ -129,7 +130,7 @@ const SearchBar = () => {
             ) : searchResults.length > 0 ? (
               searchResults.map((item, index) => {
                 // Determine available stock using stock or balance as a fallback.
-                const availableStock = item.stock || item.balance || 0;
+                const availableStock = item.totalStock || item.balance || 0;
                 return (
                   <div
                     key={item?._id}
@@ -155,7 +156,7 @@ const SearchBar = () => {
                     </div>
                     {/* Direct Add-to-Cart Button */}
                     <button
-                      onClick={() => handleAddtoCart(item._id, availableStock)}
+                      onClick={() => handleAddToCart(item._id, availableStock)}
                       className={`w-full py-2 rounded-md transition-colors text-white ${
                         availableStock === 0
                           ? "bg-gray-500 cursor-not-allowed"

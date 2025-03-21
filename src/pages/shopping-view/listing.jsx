@@ -124,7 +124,7 @@ function ShoppingListing() {
   }, [productDetails]);
 
   return (
-    <div className="mt-10 grid grid-cols-1 md:grid-cols-1 gap-6 p-4 md:p-6">
+    <div className="mt-14 grid grid-cols-1 md:grid-cols-1 gap-6 p-4 md:p-6">
       <div className="bg-[#040c1b] w-full rounded-lg shadow-sm">
         <div className="p-4 border-b flex items-center justify-between">
           <h2 className="text-3xl text-white font-extrabold">{categoryTitle}</h2>

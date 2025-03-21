@@ -10,4 +10,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    historyApiFallback: true, // Ensures the app serves index.html for any route
+  },
 });

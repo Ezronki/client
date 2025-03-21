@@ -15,7 +15,7 @@ function AdminProductTile({
           <img
             src={product?.image}
             alt={product?.title}
-            className="w-full h-[300px] object-cover rounded-t-lg"
+            className="w-full h-[150px] object-cover rounded-t-lg"
           />
         </div>
         <CardContent>
@@ -37,13 +37,13 @@ function AdminProductTile({
           <Button
             onClick={() => {
               setOpenCreateProductsDialog(true);
-              setCurrentEditedId(product?._id);
+              setCurrentEditedId(product?.id);
               setFormData(product);
             }}
           >
             Edit
           </Button>
-          <Button onClick={() => handleDelete(product?._id)}>Delete</Button>
+          <Button onClick={() => handleDelete(product?.id)}>Delete</Button>
         </CardFooter>
       </div>
     </Card>

@@ -16,17 +16,17 @@ const TawkTo = () => {
       return;
     }
 
-    // Function to add the Tidio script
+    // Function to add the Tidio script with the new URL
     const addTidioScript = () => {
       const script = document.createElement('script');
-      script.src = '//code.tidio.co/qbitqh6ozhibqszqoir6yd5mcas5bejf.js';
+      script.src = '//code.tidio.co/i9gcdo95xgjqmarw8qupdiin77oltiid.js';
       script.async = true;
       document.body.appendChild(script);
     };
 
-    // Remove existing script if any
+    // Remove existing script if any (with the new URL)
     const removeTidioScript = () => {
-      const existingScript = document.querySelector('script[src="//code.tidio.co/qbitqh6ozhibqszqoir6yd5mcas5bejf.js"]');
+      const existingScript = document.querySelector('script[src="//code.tidio.co/i9gcdo95xgjqmarw8qupdiin77oltiid.js"]');
       if (existingScript) {
         document.body.removeChild(existingScript);
       }

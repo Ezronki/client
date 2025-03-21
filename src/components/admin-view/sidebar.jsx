@@ -23,12 +23,6 @@ const adminSidebarMenuItems = [
     icon: <ShoppingBasket />,
   },
   {
-    id: "orders",
-    label: "Orders",
-    path: "/admin/orders",
-    icon: <BadgeCheck />,
-  },
-  {
     id: "editbalance",
     label: "Edit Balance",
     path: "/admin/update-balance",

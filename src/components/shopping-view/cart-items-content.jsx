@@ -53,7 +53,7 @@ function UserCartItemsContent({ cartItem }) {
     ).then((data) => {
       if (data?.payload?.success) {
         toast({
-          title: "Cart updated successfully",
+          title: "Cart item is updated successfully",
         });
       }
     });
@@ -65,7 +65,7 @@ function UserCartItemsContent({ cartItem }) {
     ).then((data) => {
       if (data?.payload?.success) {
         toast({
-          title: "Product deleted successfully",
+          title: "Cart item is deleted successfully",
         });
       }
     });
@@ -83,22 +83,22 @@ function UserCartItemsContent({ cartItem }) {
         <div className="flex items-center gap-2 mt-1">
           <Button
             variant="outline"
-            className="h-8 w-8 rounded-full"
+            className="h-5 w-5 rounded-full"
             size="icon"
             disabled={cartItem?.quantity === 1}
             onClick={() => handleUpdateQuantity(cartItem, "minus")}
           >
-            <Minus className="w-4 h-4" />
+            <Minus className="text-black w-4 h-4" />
             <span className="sr-only">Decrease</span>
           </Button>
           <span className="font-semibold">{cartItem?.quantity}</span>
           <Button
             variant="outline"
-            className="h-8 w-8 rounded-full"
+            className="h-5 w-5 rounded-full"
             size="icon"
             onClick={() => handleUpdateQuantity(cartItem, "plus")}
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="text-black w-4 h-4" />
             <span className="sr-only">Decrease</span>
           </Button>
         </div>

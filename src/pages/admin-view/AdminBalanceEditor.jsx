@@ -1,27 +1,38 @@
-// pages/AdminBalanceEditor.js
 import React, { useState } from "react";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AdminBalanceEditor = () => {
   const [email, setEmail] = useState("");
-  const [balance, setBalance] = useState(0);
-  const [message, setMessage] = useState("");
+  const [bal, setBalance] = useState(0.00);
 
   const handleUpdateBalance = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.put("http://localhost:3000/api/admin/update-balance/", { email, balance });
+    const formattedBalance = parseFloat(bal).toFixed(2);
 
-      setMessage(response.data.message);
+    try {
+      const response = await axios.put(
+        `${API_URL}/api/admin/products/update-balance/${encodeURIComponent(email)}`,
+        { bal: formattedBalance },
+        { withCredentials: true }
+      );
+
+      toast.success(response.data.message || "Balance updated successfully!");
+      setEmail("");
+      setBalance(0.00);
     } catch (error) {
-      setMessage(error.response?.data?.message || "An error occurred");
+      console.error("Error updating balance:", error.response?.data);
+      toast.error(error.response?.data?.message || "Failed to update balance.");
     }
   };
 
   return (
-    <div className="p-6 bg-white shadow-md rounded-lg">
-      <h1 className="text-2xl font-bold mb-4">Update User Balance</h1>
+    <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg mt-8">
+      <Toaster position="top-center" reverseOrder={false} />
+      <h1 className="text-2xl font-bold mb-6 text-center">Update User Balance</h1>
       <form onSubmit={handleUpdateBalance} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">User Email</label>
@@ -29,18 +40,23 @@ const AdminBalanceEditor = () => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            placeholder="user@example.com"
             required
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">New Balance</label>
           <input
             type="number"
-            value={balance}
-            onChange={(e) => setBalance(Number(e.target.value))}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            value={bal}
+            onChange={(e) => {
+              const value = Number(e.target.value);
+              if (value >= 0) setBalance(value);
+            }}
+            placeholder="0.00"
             required
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
         <button
@@ -50,7 +66,6 @@ const AdminBalanceEditor = () => {
           Update Balance
         </button>
       </form>
-      {message && <p className="mt-4 text-center text-gray-700">{message}</p>}
     </div>
   );
 };

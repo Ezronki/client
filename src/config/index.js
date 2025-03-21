@@ -187,13 +187,13 @@ export const shoppingViewHeaderMenuItems = [
       { id: "usa_banks", label: "USA Banks", path: "/shop/listing?category=usa_banks" },
       { id: "uk_banks", label: "UK Banks", path: "/shop/listing?category=uk_banks" },
       { id: "canada_banks", label: "Canada Banks", path: "/shop/listing?category=canada_banks" },
-      { id: "cc_cvv", label: "CC & CVV", path: "/shop/listing?category=cc_cvv" },
+      { id: "cc_cvv", label: "CC & Cards", path: "/shop/listing?category=cc_cvv" },
       { id: "stealth_accountss", label: "Stealth Accounts", path: "/shop/listing?category=stealth_accountss" },
   
       { id: "toolss", label: "Tools", path: "/shop/listing?category=toolss" },
       { id: "e_gift_cardss", label: "E-Gift Cards", path: "/shop/listing?category=e_gift_cards" },
      
-      { id: "carded_productss", label: "Carded Products", path: "/shop/listing?category=carded_products" },
+      
       { id: "cashapp", label: "CashApp", path: "/shop/listing?category=cashapp" },
       { id: "paypal", label: "PayPal", path: "/shop/listing?category=paypal" },
      
@@ -201,12 +201,17 @@ export const shoppingViewHeaderMenuItems = [
   },
   {
     id: "linkable Debits",
-    label: "Linkables",
+    label: "Debits",
     path: "/shop/linkables",
     dropdown: [
       { id: "clm", label: "Cashapp", path: "/shop/listing?category=cashapp-linkables" },
       { id: "ppm", label: "Paypal", path: "/shop/listing?category=paypal-linkabes" },
     ],
+  },
+  {
+    id: "tutorials",
+    label: "Tutorials",
+    path: "/shop/tutorials",
   },
   {
     id: "about",

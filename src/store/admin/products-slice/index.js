@@ -137,7 +137,7 @@ const AdminProductsSlice = createSlice({
         state.isLoading = false;
         const updatedProduct = action.payload.data;
         const index = state.productList.findIndex(
-          (product) => product._id === updatedProduct._id
+          (product) => product.id === updatedProduct.id
         );
         if (index !== -1) {
           state.productList[index] = updatedProduct;
@@ -157,7 +157,7 @@ const AdminProductsSlice = createSlice({
         state.isLoading = false;
         const deletedProductId = action.meta.arg;
         state.productList = state.productList.filter(
-          (product) => product._id !== deletedProductId
+          (product) => product.id !== deletedProductId
         );
       })
       .addCase(deleteProduct.rejected, (state, action) => {

@@ -1,7 +1,6 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-
 const API_URL = import.meta.env.VITE_API_URL;
 
 const initialState = {
@@ -84,7 +83,6 @@ const shoppingCartSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchCartItems.fulfilled, (state, action) => {
-        console.log("API Response:", action.payload);
         state.isLoading = false;
         state.cartItems = action.payload.data;
       })

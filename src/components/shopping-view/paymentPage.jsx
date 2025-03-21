@@ -31,12 +31,15 @@ const PaymentPage = () => {
     dispatch(fetchCartItems(user.id));
   }, [dispatch, user]);
 
-  // Calculate total amount with salePrice support
+  // Calculate total amount with salePrice support, converting string values to numbers
   const totalCartAmount =
     (items || []).reduce(
       (sum, item) =>
         sum +
-        (item?.salePrice > 0 ? item.salePrice : item?.price) * item?.quantity,
+        (parseFloat(item.salePrice) > 0
+          ? parseFloat(item.salePrice)
+          : parseFloat(item.price)) *
+          parseFloat(item.quantity),
       0
     );
 
@@ -69,7 +72,7 @@ const PaymentPage = () => {
         }
         case "usdt": {
           setCryptoAddress("TLZVUDTxWZ6L7tgYXcQqtSx29EinwjRP2w");
-          setConvertedAmount(`${totalCartAmount} USDT`);
+          setConvertedAmount(`${totalCartAmount.toFixed(2)} USDT`);
           break;
         }
         default: {
@@ -116,7 +119,7 @@ const PaymentPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 mt-5 p-4 md:p-8 font-sans">
+    <div className="min-h-screen bg-gray-50 mt-[60px]  p-4 md:p-8 font-sans">
       <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
         <header className="bg-gray-100 px-4 md:px-8 py-6 border-b border-gray-200">
           <h1 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-4">
@@ -142,7 +145,7 @@ const PaymentPage = () => {
               </thead>
               <tbody>
                 {(items || []).map((item) => (
-                  <tr key={item._id} className="border-b border-gray-200 hover:bg-gray-50">
+                  <tr key={item.id} className="border-b border-gray-200 hover:bg-gray-50">
                     <td className="px-4 py-2 md:px-6 md:py-4">
                       <img 
                         src={item.image} 
@@ -153,12 +156,12 @@ const PaymentPage = () => {
                     <td className="px-4 py-2 md:px-6 md:py-4 font-medium text-gray-800">{item.title}</td>
                     <td className="px-4 py-2 md:px-6 md:py-4 text-gray-600">{item.quantity}</td>
                     <td className="px-4 py-2 md:px-6 md:py-4 text-gray-600">
-                      ${item.salePrice > 0 ? item.salePrice.toFixed(2) : item.price.toFixed(2)}
+                      ${parseFloat(item.salePrice) > 0 ? parseFloat(item.salePrice).toFixed(2) : parseFloat(item.price).toFixed(2)}
                     </td>
                     <td className="px-4 py-2 md:px-6 md:py-4 text-green-700 font-medium">
                       ${(
-                        (item.salePrice > 0 ? item.salePrice : item.price) *
-                        item.quantity
+                        (parseFloat(item.salePrice) > 0 ? parseFloat(item.salePrice) : parseFloat(item.price)) *
+                        parseFloat(item.quantity)
                       ).toFixed(2)}
                     </td>
                   </tr>

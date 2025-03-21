@@ -1,14 +1,15 @@
 import { Button } from "@/components/ui/button";
-import bannerOne from "../../assets/banner-1.webp";
-import bannerTwo from "../../assets/banner-2.webp";
-import bannerThree from "../../assets/banner-3.webp";
+
 import dumpsImage from "../../assets/img/dp.jpg"; // Replace with your actual image paths
 import skimmerImage from "../../assets/img/sk.jpg";
 import cardedItemsImage from "../../assets/img/ci.jpg";
 import tutorialsImage from "../../assets/img/tut.jpg";
 import bankLoginsImage from "../../assets/img/bank.jpg";
 import { useSearchParams } from "react-router-dom";
-import ProductCarousel from "../../components/shopping-view/ProductCarousel"
+import ProductCarousel from "../../components/shopping-view/ProductCarousel";
+import HeaderImage from '../../assets/SUDO/QQ.gif';
+import SudoImage from '../../assets/SUDO/sudo-2.jpg';
+import MyImage from '../../assets/SUDO/banklog.jpg';
 
 
 
@@ -29,8 +30,6 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import bannerImage from "../../assets/header.gif"
-import sudo from "../../assets/sudo.jpg"
 import {
   fetchAllFilteredProducts,
   fetchProductDetails,
@@ -163,7 +162,7 @@ function ShoppingHome() {
     )
   }
 
-  
+
 
   function handleAddtoCart(getCurrentProductId) {
     dispatch(
@@ -204,164 +203,197 @@ function ShoppingHome() {
 
   return (
     <div className="mt-14 flex flex-col min-h-screen">
-      
+
 
 
 
       <section className="bg-black py-12 mt-3 mx-4 lg:mx-20 rounded-2xl">
         <div className="container mx-auto px-4 lg:px-20">
-          <p className="text-3xl font-bold text-center text-[#ff9900] mb-6">
-            WELCOME TO CVV GLITCH
-          </p>
-          
 
+          <section className="bg-black py-8">
+            <div className="container mx-auto p-6 bg-black rounded-2xl shadow-lg border border-gray-700 overflow-hidden flex flex-wrap">
+              {/* Left Column - 66% width on medium screens and up */}
+              <div className="w-full md:w-2/3 pr-4 mb-6 md:mb-0">
+                <img
+                  src={HeaderImage}
+                  alt="Header"
+                  className="w-full h-auto rounded-2xl shadow-2xl ring-2 ring-gray-600"
+                  loading="eager"
+                />
+              </div>
+              {/* Right Column - 33% width on medium screens and up */}
+              <div className="w-full md:w-1/3 pl-4 flex items-center justify-center">
+                <img
+                  src={SudoImage}
+                  alt="Sudo"
+                  className="w-full h-auto rounded-2xl shadow-2xl ring-2 ring-gray-600"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </section>
         </div>
-       
+        <div
+
+          className="mt-2 mb-4 px-4 border-l-[0px] border-r-[0px] p-2 border-2 border-gray-800 bg-[#FFA500] rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer mx-5 md:mx-20"
+        >
+          <h2 className="text-lg mb sm:text-xl md:text-2xl lg:text-4xl font-bold text-white text-center whitespace-nowrap">
+            Best Online Hacking Tools Shop
+          </h2>
+        </div> 
+        <div
+
+          className="mt-6 px-4 border-l-[0px] border-r-[0px] p-2 border-2 border-gray-800 bg-[#FFA500] rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer mx-5 md:mx-20"
+        >
+          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold text-white text-center whitespace-nowrap">
+            Bank Wire Transfer Hacking
+          </h2>
+        </div>
+        <div className="w-full p-4">
+      <img
+        src={MyImage}
+        alt="sudohackers bank logins for sale vendor available"
+        className="w-full h-auto rounded-lg shadow-lg"
+        decoding="async"
+        loading="lazy"
+      />
+    </div>
         <ProductCarousel />
-
-
-        <CardSection />
       </section>
-     
 
 
 
 
-      <div
-
-        className="mt-5 px-4 border-l-[10px] border-r-[10px] p-2 border-2 border-gray-800 bg-[#FFA500] rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer mx-5 md:mx-20"
-      >
-        <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold text-white text-center whitespace-nowrap">
-          Best Online Hacking Tools
-        </h2>
-      </div>
-      <div
-
-        className="mt-6 px-4 border-l-[10px] border-r-[10px] p-2 border-2 border-gray-800 bg-[#FFA500] rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer mx-5 md:mx-20"
-      >
-        <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold text-white text-center whitespace-nowrap">
-          Bank Wire Transfer Hacking
-        </h2>
-      </div>
 
 
-      <section className="bg-black py-12 mt-8 mx-4 lg:mx-20 rounded-2xl">
+
+
+
+
+      <section className="bg-black text-gray-300 py-12 mt-8 mx-4 lg:mx-20 rounded-2xl">
         <div className="container mx-auto px-4 lg:px-20">
-          {/* Main Title */}
-          <h1 className="text-3xl font-bold text-center text-[#ff9900] mb-8">
-            CARDING CC CCASHOUT
-          </h1>
+          
+          
+        <p className="text-2xl text-[#ff9900] font-bold mb-4">
+        DARK WEB Hacker’s Dictionary
+      </p>
+      <h1 className="text-2xl  font-bold mb-4">
+        Are you new to the realm of hacking?
+      </h1>
+      <p className="mb-4">
+        Do you feel dumb when you don’t know the meaning of a certain term? Well, then this will certainly help you out! If you are ever unsure about anything, simply scroll down and find that specific word, then read the definition.
+      </p>
+      <p className="mb-6">
+        Anything includes: Abbreviations, Phrases, Words, and Techniques. “The list is in alphabetical order for convenience!”
+      </p>
 
-          {/* Introductory Paragraph */}
-          <p className="text-lg text-gray-300 leading-relaxed mb-6">
-            Over the years, the Cvv Glitch team has been rugged in online carding and cashing out of stolen/hacked credit card numbers (CC Fullz). We have perfected several CC hacking/sniffing methods via spamming, malware spreading and asking everyone in the streets for their card details. Hey you Moda fuckal!, I’m Captain Jack Sparrow! Your cards numbers!
-          </p>
-
-          {/* Second Paragraph */}
-          <p className="text-lg text-gray-300 leading-relaxed mb-6">
-            So to say brothers and lovers of high balanced CC Fullz, we have the best team to supply you fresh hacked CC to meet your demand for money and all carding and CC Fullz cashing out tricks to work for you. Methods change, as a team of pentesters constantly trying to study shopping platforms like Amazon, Ebay and other sites vulnerable to CC carding and refund methods. In July, 20, 2022, a member of our CC cashout research team discovered you can use a crypto site by simply verifying your SSN details and submitting the required scan documents—they don’t care about the cards, at least for now while they’re trying to make money and upgrade their site security against fraudulent credit card charges. We will share this crypto site and carding guide to customers who enroll for our buy CC Fullz and carding mentorship.
-          </p>
-          <p className="text-xl font-bold text-left text-[#ff9900] mb-6">
-            RELIABLE SPAMMING TOOLS
-          </p>
-          <p className="text-lg text-gray-300 leading-relaxed mb-6">
-            Spamming is not for the faint of heart; poor spamming setup and low-quality tools can easily result in financial loss. Finding legitimate spam sellers is the next challenging task, and the Sudohackers.com team is attempting to close the gap in this area.
-
-            A highly dependable customer Before he discovered Sudohackers, Adrian was following all the rules, but in the end his links were not impervious and would eventually die out, raising a warning on the victim’s browser. Brothers, this is bad for business.
-
-            We developed a new way for this brother and used blockchain technology to construct a bulletproof link; the results he received as a consequence are astounding.
-
-            Like Felix there maybe little things you’re not doing correctly, maybe you need to change your letter, encrypt it and make your letter FUD.
-          </p>
-          <p className="text-xl font-bold text-left text-[#ff9900] mb-6">
-            Order Quality Spamming Tools In 2024
-          </p>
-          <p className="text-lg text-gray-300 leading-relaxed mb-6">
-            We can code any fraud website you desire specifically for you and have updated scam pages for all banks. Fresh, legitimate SMTP is ensured to reach the mailbox of offices365 and other email providers. With 90–95% inbox delivery, we offer an SMS panel/gateway with any SENDER ID of your choosing. Simple sims, a GSM device, sham websites (Wells Fargo, RBFCU, PayPal, Netflix, USPS), SMTP sender, domains, leads, and Cpanels are examples of these.
-          </p>
-          <p className="text-lg text-gray-300 leading-relaxed mb-6">
-            We provide good quality routes to which is stable for all countries sending bulk sms and also to prosper your work with many clicks. SMS gateway available for Spamming/clean traffic. Also, SMS panel available for use. We support almost all the countries you may want.
-          </p>
-          <p className="text-xl font-bold text-left text-[#ff9900] mb-6">
-            OUR CAPABILITIES;
-          </p>
-          <ul className="list-disc list-inside text-lg text-gray-300 mb-6">
-            <li>&gt; SMS panel available</li>
-            <li>&gt; Free testing to any countries (Spam/Traffic)</li>
-            <li>&gt; 100% delivery of bulk SMS</li>
-            <li>&gt; No scamming zone</li>
-            <li>&gt; We provide good job for work done</li>
-            <li>&gt; No wasting of time on any work. You get great clicks from us.</li>
-
-          </ul>
-
-
-
-          {/* Emphasized Title */}
-          <p className="text-xl font-bold text-left text-[#ff9900] mb-6">
-            MAKE MONEY FROM CARDING AND CC CASHOUT 2025
-          </p>
-
-          {/* Third Paragraph */}
-          <p className="text-lg text-gray-300 leading-relaxed mb-6">
-            If you’re a newbie carder or a pro carder, the Sudohackers.com team understands your needs and offers only quality products and service. The following offer is available for customers who want to get started with carding without getting burnt. The best way to succeed is to learn from successful people—and you will save a lot of time. This offer costs $350, and here’s what you will learn. You will receive two guides that are currently working for everyone, no matter your country.
-          </p>
-
-          {/* Bullet List */}
-          <ul className="list-disc list-inside text-lg text-gray-300 mb-6">
-            <li>How to Setup your Computer Properly for Carding.</li>
-            <li>Best Site to Buy CC For Carding All Trusted Dumps Shop List</li>
-            <li>Best CC Shop – Carding Forum</li>
-            <li>How to confirm the balance on CC without killing the card.</li>
-            <li>List of Card Shops – Sites to buy CC CVV – CC to Buy</li>
-            <li>Valid CCV Shop: Sale Good CC worldwide Fresh and Cheap</li>
-            <li>FRESH CVV FULLZ Live Fullz – Buy live CC with balance</li>
-            <li>CVV Fullz Credit Card Dumps, CC ATM Track 1/2 + SMTP…</li>
-            <li>Hot Seller CVV Good 2024 – NON VBV Credit Card/Debit Card</li>
-            <li>
-              Buy Western Union Money Transfer CVV CC Dumps track 1 &amp; 2; PayPal and Cashapp transfers also available
-            </li>
-            <li>
-              Credit Cards CVV CC Shops &amp; Sellers (Verified) – CVV SHOP
-            </li>
-            <li>How to Identify Card-able sites on your own.</li>
-            <li>How to Cashout your money to bank drop or to your bitcoin wallet.</li>
-            <li>Top legit Sites to Buy high balance CC Fullz in 2024.</li>
-            <li>Currently hitting websites for carding CC fullz to bitcoin.</li>
-            <li>2024 fire BIN list, hitting high balance.</li>
-          </ul>
-
-          {/* Closing Paragraph */}
-          <p className="text-lg text-gray-300 leading-relaxed mb-6">
-            You need to learn Carding to do it yourself, make fast money, and become stinking rich.
-          </p>
-
-          {/* Secondary Title */}
-          <p className="text-xl font-bold text-left text-[#ff9900] mb-6">
-            TO ALL THE BADDIES WHO KNOWS THE GAME
-          </p>
-
-          {/* Final Paragraph */}
-          <p className="text-lg text-gray-300 leading-relaxed mb-6">
-            If you’re a good carder already, worry not—because we have updated methods to get you earning immediately. Also, you should take a look at the products listed below and check them out in our store.
-          </p>
-
-          {/* Second Bullet List */}
-          <ul className="list-disc list-inside text-lg text-gray-300">
-            <li>Credit card details, account balance up to 5,000 ~ $180</li>
-            <li>Credit card details, account balance up to 10,000 and more – $150</li>
-            <li>USA hacked credit card details with CVV – $185</li>
-            <li>Australia hacked credit card details with CVV – $145</li>
-            <li>Canada hacked credit card details with CVV – $150</li>
-            <li>UK hacked credit card details with CVV – $165</li>
-            <li>Stolen online banking logins – From $180</li>
-          </ul>
+      <h2 className="text-xl font-semibold mb-2">Abbreviations</h2>
+      <ul className="list-disc pl-6 space-y-3">
+        <li>
+          🥇 <strong>DDoS</strong> = tributed Denial of Service
+        </li>
+        <li>
+          🥇 <strong>DDoS</strong> = Distributed Reflected Denial of Service Attack; uses reflection servers (or methods like DNS spoofing) to make an attack appear to originate from multiple IPs. Amplification of power in the attack <em>COULD</em> occur.
+        </li>
+        <li>
+          🥇 <strong>FTP</strong> = File Transfer Protocol. Used for transferring files over an FTP server.
+        </li>
+        <li>
+          🥇 <strong>FUD</strong> = Fully Undetectable.
+        </li>
+        <li>
+          🥇 <strong>Hex</strong> = In computer science, hexadecimal refers to base‑16 numbers using digits 0–9 and A–F. In C (as well as Java, JavaScript, C++, etc.), hex numbers are prefixed with <code>0x</code>, so <code>0x80</code> is equivalent to 128 decimal.
+        </li>
+        <li>
+          🥇 <strong>HTTP</strong> = Hyper Text Transfer Protocol. The foundation of data communication on the World Wide Web.
+          <br />
+          <strong>MIRC</strong> = Internet Relay Chat. Transmits text messages in real time between online users.
+        </li>
+        <li>
+          🥇 <strong>JDB</strong> = Java drive‑by; a common web‑based exploit allowing an attacker to download and execute malicious code locally on a victim’s machine through a known Java vulnerability.
+        </li>
+        <li>
+          🥇 <strong>Malware</strong> = Malicious Software.
+        </li>
+        <li>
+          🥇 <strong>Nix</strong> = Unix‑based operating system, typically referenced when discussing DoS attacks.
+        </li>
+        <li>
+          🥇 <strong>POP3</strong> = The most popular protocol for retrieving email from a server.
+        </li>
+        <li>
+          🥇 <strong>RAT</strong> = Remote Administration Tool.
+        </li>
+        <li>
+          🥇 <strong>SDB</strong> = Silent drive‑by; using a zero‑day exploit to covertly download and execute malicious code on a victim’s system (similar to JDB, but without notifying the user).
+        </li>
+        <li>
+          🥇 <strong>SE</strong> = Social Engineering.
+        </li>
+        <li>
+          🥇 <strong>SKID</strong> = Script Kid/Script Kiddie.
+        </li>
+        <li>
+          🥇 <strong>SMTP</strong> = A TCP/IP protocol used in sending and receiving email.
+        </li>
+        <li>
+          🥇 <strong>SQL</strong> = Structured Query Language. A language used to communicate with databases and DBMS; often seen in terms like “SQL Injection.”
+        </li>
+        <li>
+          🥇 <strong>SSH</strong> = Secure Shell, used to connect to Virtual Private Servers.
+        </li>
+        <li>
+          🥇 <strong>TCP</strong> = Transmission Control Protocol, which creates connections and exchanges packets of data.
+        </li>
+        <li>
+          🥇 <strong>UDP</strong> = User Datagram Protocol, an alternative to TCP used for DNS, VoIP, and file sharing.
+        </li>
+        <li>
+          🥇 <strong>VPN</strong> = Virtual Private Network.
+        </li>
+        <li>
+          🥇 <strong>VPS</strong> = Virtual Private Server.
+        </li>
+        <li>
+          🥇 <strong>XSS (CSS)</strong> = Cross Site Scripting.
+        </li>
+        <li>
+          🥇 <strong>Algorithm</strong> = A series of steps specifying which actions to take in which order.
+        </li>
+        <li>
+          🥇 <strong>ANSI Bomb</strong> = ANSISYS key‑remapping commands using ANSI numeric codes to redefine keys.
+        </li>
+        <li>
+          🥇 <strong>Back Door</strong> = A method a hacker leaves on a system to regain access later.
+        </li>
+        <li>
+          🥇 <strong>Binary</strong> = A numbering system with only two possible values per digit: 0 and 1.
+        </li>
+        <li>
+          🥇 <strong>Black Hat</strong> = A hacker who performs illegal activities online.
+          <br />
+          <strong>Blue Hat</strong> = A hacker outside of traditional security consulting who tests systems before launch for vulnerabilities; Microsoft also uses “BlueHat” for a series of security events.
+        </li>
+        <li>
+          🥇 <strong>Bot</strong> = A piece of malware that connects a computer to an attacker, typically using HTTP or IRC to await instructions.
+        </li>
+        <li>
+          🥇 <strong>Botnet</strong> = A network of computers infected by worms or Trojans and controlled by hackers to send spam, viruses, or launch DoS attacks.
+        </li>
+        <li>
+          🥇 <strong>Buffer Overflow</strong> = An exploit that sends more data than a system can handle, taking advantage of common programming errors.
+        </li>
+        <li>
+          🥇 <strong>Cracker</strong> = A hacker who decrypts passwords.
+        </li>
+      </ul>
+         
         </div>
         <div className="flex flex-col md:flex-row justify-center items-center gap-6">
           {/* Left Section: Copyright */}
           <div className="text-center md:text-left">
             <p className="text-sm text-gray-400">
-              &copy; {new Date().getFullYear()} Cvvglitch. All rights reserved.
+              &copy; {new Date().getFullYear()} Sudohackers. All rights reserved.
             </p>
           </div>
         </div>

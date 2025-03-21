@@ -1,20 +1,17 @@
-import { LogOut, Menu, ShoppingCart, UserCog, ChevronDown } from "lucide-react";
+import { LogOut, Menu, ShoppingCart, ChevronDown, Plus } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
-import { Label } from "../ui/label";
-import track4Logo from "../../assets/logo2/logo-2.gif";
+import track4Logo from "../../assets/SUDO/Logo.png";
 import { Button } from "../ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { shoppingViewHeaderMenuItems } from "@/config";
-import { Plus } from 'lucide-react';
-
 import SearchBar from "./SearchBar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "../ui/avatar";
@@ -22,34 +19,31 @@ import { logoutUser } from "@/store/auth-slice";
 import { useEffect, useState } from "react";
 import UserCartWrapper from "./cart-wrapper";
 import { fetchCartItems } from "@/store/shop/cart-slice";
+
 function MenuItems({ onItemClick, isMobile }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [openDropdownId, setOpenDropdownId] = useState(null);
   const [hoveredDropdownId, setHoveredDropdownId] = useState(null);
-
   const { user } = useSelector((state) => state.auth);
 
-  const handleNavigate = (getCurrentMenuItem) => {
+  const handleNavigate = (menuItem) => {
     sessionStorage.removeItem('filters');
     const currentFilter =
-      getCurrentMenuItem.id !== 'home' &&
-        getCurrentMenuItem.id !== 'products' &&
-        getCurrentMenuItem.id !== 'search' &&
-        getCurrentMenuItem.id !== 'about'
-        ? { category: [getCurrentMenuItem.id] }
+      menuItem.id !== 'home' &&
+        menuItem.id !== 'products' &&
+        menuItem.id !== 'search' &&
+        menuItem.id !== 'about' &&
+        menuItem.id !== 'tutorials'
+        ? { category: [menuItem.id] }
         : null;
-
     sessionStorage.setItem('filters', JSON.stringify(currentFilter));
-
     if (location.pathname.includes('listing') && currentFilter !== null) {
-      // Set category in the query string for filtering products
-      setSearchParams({ category: getCurrentMenuItem.id });
+      setSearchParams({ category: menuItem.id });
     } else {
-      navigate(getCurrentMenuItem.path);
+      navigate(menuItem.path);
     }
-
     if (isMobile && onItemClick) {
       onItemClick();
     }
@@ -60,12 +54,16 @@ function MenuItems({ onItemClick, isMobile }) {
   };
 
   return (
-    <nav className={isMobile ? 'flex flex-col gap-2' : 'flex items-center gap-4'}>
+    <nav className={isMobile ? "flex flex-col gap-2" : "flex items-center gap-4"}>
       {shoppingViewHeaderMenuItems.map((item) => (
         <div
           key={item.id}
-          onMouseEnter={!isMobile && item.dropdown ? () => setHoveredDropdownId(item.id) : undefined}
-          onMouseLeave={!isMobile && item.dropdown ? () => setHoveredDropdownId(null) : undefined}
+          onMouseEnter={
+            !isMobile && item.dropdown ? () => setHoveredDropdownId(item.id) : undefined
+          }
+          onMouseLeave={
+            !isMobile && item.dropdown ? () => setHoveredDropdownId(null) : undefined
+          }
         >
           {!isMobile && item.dropdown ? (
             <DropdownMenu open={hoveredDropdownId === item.id}>
@@ -77,26 +75,38 @@ function MenuItems({ onItemClick, isMobile }) {
                   </span>
                 </div>
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                onMouseEnter={() => setHoveredDropdownId(item.id)}
-                onMouseLeave={() => setHoveredDropdownId(null)}
-                style={{ pointerEvents: 'auto' }}
-              >
-                {item.dropdown.map((subItem) => (
-                  <DropdownMenuItem
-                    key={subItem.id}
-                    onClick={() => {
-                      handleNavigate(subItem); // Handle navigation for sub-items
-                      if (isMobile) {
-                        setOpenDropdownId(null); // Close dropdown on mobile after selection
-                      }
-                    }}
-                    className="cursor-pointer"
+              {/* Wrap dropdown content in AnimatePresence and motion.div for animation */}
+              <AnimatePresence>
+                {hoveredDropdownId === item.id && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95, y: -5 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95, y: -5 }}
+                    transition={{ duration: 0.2 }}
                   >
-                    {subItem.label}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
+                    <DropdownMenuContent
+                      onMouseEnter={() => setHoveredDropdownId(item.id)}
+                      onMouseLeave={() => setHoveredDropdownId(null)}
+                      style={{ pointerEvents: "auto" }}
+                    >
+                      {item.dropdown.map((subItem) => (
+                        <DropdownMenuItem
+                          key={subItem.id}
+                          onClick={() => {
+                            handleNavigate(subItem);
+                            if (isMobile) {
+                              setOpenDropdownId(null);
+                            }
+                          }}
+                          className="cursor-pointer"
+                        >
+                          {subItem.label}
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </DropdownMenu>
           ) : (
             <div
@@ -104,7 +114,7 @@ function MenuItems({ onItemClick, isMobile }) {
                 if (isMobile && item.dropdown) {
                   toggleDropdown(item.id);
                 } else {
-                  handleNavigate(item); // Handle navigation for regular items
+                  handleNavigate(item);
                 }
               }}
               className="block py-2 cursor-pointer"
@@ -117,17 +127,16 @@ function MenuItems({ onItemClick, isMobile }) {
               </span>
             </div>
           )}
-
           {isMobile && item.dropdown && openDropdownId === item.id && (
             <div className="pl-4 border-l-2 border-gray-200 max-h-48 overflow-y-auto">
               {item.dropdown.map((subItem) => (
                 <div
                   key={subItem.id}
                   onClick={() => {
-                    handleNavigate(subItem); // Handle navigation for mobile sub-items
-                    setOpenDropdownId(null); // Close dropdown on mobile after selection
+                    handleNavigate(subItem);
+                    setOpenDropdownId(null);
                   }}
-                  className="block py-1 hover:text-primary cursor-pointer"
+                  className="block py-1 hover:text-[#ff6900] cursor-pointer"
                 >
                   {subItem.label}
                 </div>
@@ -141,30 +150,38 @@ function MenuItems({ onItemClick, isMobile }) {
 }
 
 function HeaderButtons({ onItemClick, isMobile }) {
+  const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+
+  let formattedBalance = "0.00";
+  if (user?.bal !== undefined && user?.bal !== null) {
+    const num = Number(user.bal);
+    formattedBalance = isNaN(num) ? "0.00" : num.toFixed(2);
+  }
+
+  const handleClick = () => {
+    navigate('/shop/topup');
+    if (isMobile && onItemClick) {
+      onItemClick(); // Closes the sheet on mobile
+    }
+  };
 
   return (
     <div className="flex text-black items-center gap-2">
       <button
         className="flex items-center gap-2 bg-transparent text-black font-semibold py-2 px-4 rounded transition-colors"
-        onClick={() => navigate('/shop/topup')}
+        onClick={handleClick}
       >
         <div className="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center">
           <Plus className="w-5 h-5 text-white" />
         </div>
-        <span className="text-white">$0.00</span>
+        <span className="text-white">${formattedBalance}</span>
       </button>
-
-
-
-
-
-
     </div>
   );
 }
 
-function HeaderRightContent() {
+function HeaderRightContent({ isMobile }) {
   const { user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.shopCart);
   const [openCartSheet, setOpenCartSheet] = useState(false);
@@ -176,26 +193,25 @@ function HeaderRightContent() {
   }
 
   useEffect(() => {
-    dispatch(fetchCartItems(user?.id));
-  }, [dispatch]);
-
-
+    if (user?.id) {
+      dispatch(fetchCartItems(user?.id));
+    }
+  }, [dispatch, user?.id]);
 
   return (
-    <div className="flex lg:items-center lg:flex-row flex-col gap-4">
+    <div className="flex items-center gap-4">
       <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
-        <Button
-          onClick={() => setOpenCartSheet(true)}
-          variant="outline"
-          size="icon"
-          className="relative"
-        >
-          <ShoppingCart className="text-black w-6 h-6" />
-          <span className="absolute top-[-5px] text-black right-[2px] font-bold text-sm">
-            {cartItems?.items?.length || 0}
-          </span>
-          <span className="sr-only">User cart</span>
-        </Button>
+      <Button
+  onClick={() => setOpenCartSheet(true)}
+  size="icon"
+  className="relative"
+>
+  <ShoppingCart className="text-white w-6 h-6" />
+  <span className="absolute top-[-5px] right-[2px] font-bold text-sm text-yellow-400">
+    {cartItems?.items?.length || 0}
+  </span>
+  <span className="sr-only">User cart</span>
+</Button>
         <UserCartWrapper
           setOpenCartSheet={setOpenCartSheet}
           cartItems={
@@ -226,36 +242,39 @@ function HeaderRightContent() {
 }
 
 function ShoppingHeader() {
-  const { isAuthenticated } = useSelector((state) => state.auth);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full flex items-center font-bold text-white border-b bg-black">
-      <div className="flex h-16 items-center justify-between px-4 md:px-6 w-full max-w-7xl mx-auto">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full flex items-center font-bold text-white border-b bg-black h-[80px]">
+      <div className="flex h-full items-center justify-between px-4 md:px-6 w-full max-w-7xl mx-auto">
         <Link to="/shop/home">
-          <img src={track4Logo} alt="Track4 Logo" className=" h-12 w-auto" />
+          <img src={track4Logo} alt="Track4 Logo" className="h-12 w-auto" />
         </Link>
-
+        <div className="flex items-center lg:hidden">
+          <div className="flex-1 max-w-xl mx-4">
+            <SearchBar />
+          </div>
+          <div className="flex items-center mr-2">
+            <HeaderRightContent />
+          </div>
+        </div>
         <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
           <SheetTrigger asChild>
-            <Button variant="outline" size="icon" className="lg:hidden">
+            <Button variant="outline" className="lg:hidden p-1">
               <Menu className="text-black h-6 w-6" />
               <span className="sr-only">Toggle header menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-full max-w-xs">
+          <SheetContent
+            side="left"
+            className="w-full max-w-xs bg-neutral-900 bg-opacity-90 text-white p-6 rounded-r-2xl shadow-2xl backdrop-blur-md border border-neutral-800"
+          >
             <HeaderButtons onItemClick={() => setIsSheetOpen(false)} isMobile={true} />
-            <div className="mt-4 ">
-              <SearchBar />
-            </div>
             <div className="mt-4">
-
               <MenuItems onItemClick={() => setIsSheetOpen(false)} isMobile={true} />
-              <HeaderRightContent />
             </div>
           </SheetContent>
         </Sheet>
-
         <div className="hidden lg:flex lg:items-center lg:gap-6">
           <HeaderButtons isMobile={false} />
           <div className="flex-1 max-w-xl mx-8">
@@ -263,7 +282,6 @@ function ShoppingHeader() {
           </div>
           <MenuItems isMobile={false} />
         </div>
-
         <div className="hidden lg:block">
           <HeaderRightContent />
         </div>

@@ -4,14 +4,13 @@ import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/prod
 import ShoppingProductTile from "../../components/shopping-view/product-tile";
 import ProductDetailsDialog from "../../components/shopping-view/product-details";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper";
+import { Navigation, Autoplay } from "swiper";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/components/ui/use-toast";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/pagination";
 
 const ProductCarousel = () => {
   const dispatch = useDispatch();
@@ -43,46 +42,50 @@ const ProductCarousel = () => {
     }
   }, [productDetails]);
 
-  const handleAddtoCart = (getCurrentProductId, getTotalStock) => {
-    const getCartItems = cartItems?.items || [];
+  function handleAddToCart(getCurrentProductId, getTotalStock) {
+    // Add logging to see what we're sending to the backend
+    console.log("Adding to cart with payload:", {
+      userId: user?._id,
+      productId: getCurrentProductId,
+      quantity: 1,
+    });
 
-    if (getCartItems.length) {
-      const indexOfCurrentItem = getCartItems.findIndex(
+    let getCartItemsArray = cartItems.items || [];
+
+    if (getCartItemsArray.length) {
+      const indexOfCurrentItem = getCartItemsArray.findIndex(
         (item) => item.productId === getCurrentProductId
       );
       if (indexOfCurrentItem > -1) {
-        const currentQuantity = getCartItems[indexOfCurrentItem].quantity;
-        if (currentQuantity + 1 > getTotalStock) {
+        const getQuantity = getCartItemsArray[indexOfCurrentItem].quantity;
+        if (getQuantity + 1 > getTotalStock) {
           toast({
-            title: `Only ${currentQuantity} quantity can be added for this item`,
+            title: `Only ${getQuantity} quantity can be added for this item`,
             variant: "destructive",
           });
           return;
         }
       }
     }
-
     dispatch(
       addToCart({
-        userId: user?.id,
-        productId: getCurrentProductId,
+        userId: user?.id, // Ensure user._id is defined
+        productId: getCurrentProductId, // Should be productItem._id from your productList
         quantity: 1,
       })
     ).then((data) => {
       if (data?.payload?.success) {
         dispatch(fetchCartItems(user?.id));
         toast({
-          title: "Product added to cart",
+          title: "Product is added to cart",
         });
       }
     });
-  };
+  }
 
   return (
-    <div className="relative py-2 bg-black z-10 pb-16">
-      <h2 className="text-3xl font-bold text-center text-white">
-        Featured Products
-      </h2>
+    <div className="relative py-2 mt-3 bg-black z-10 pb-16">
+      <h2 className="text-3xl font-bold text-center text-white"></h2>
 
       {(!productList || productList.length === 0) ? (
         <div className="text-center text-gray-400">
@@ -90,14 +93,14 @@ const ProductCarousel = () => {
         </div>
       ) : (
         <Swiper
-          modules={[Navigation, Pagination, Autoplay]}
+          modules={[Navigation, Autoplay]}
           spaceBetween={24}
           slidesPerView={1.2}
           centeredSlides={false}
           loop={true}
-          autoplay={{ delay: 2000, pauseOnMouseEnter: true, disableOnInteraction: false }}
+          autoplay={{ delay: 2500, pauseOnMouseEnter: true, disableOnInteraction: false }}
           navigation
-          pagination={{ clickable: true }}
+          pagination={false} // Removed pagination dots
           breakpoints={{
             640: { slidesPerView: 2.2, spaceBetween: 15 },
             1024: { slidesPerView: 4, spaceBetween: 15 },
@@ -105,13 +108,15 @@ const ProductCarousel = () => {
           className="!pb-12 relative z-10"
         >
           {productList.map((productItem) => (
-            <SwiperSlide key={productItem.id || productItem._id}>
+            <SwiperSlide key={productItem._id}>
               <div className="px-2 py-4">
                 <ShoppingProductTile
-                  key={productItem.id}
+                  key={productItem._id}
                   product={productItem}
                   disableSwing={true}
-                  handleAddtoCart={handleAddtoCart}
+                  handleAddtoCart={() =>
+                    handleAddToCart(productItem._id, productItem.totalStock)
+                  }
                 />
               </div>
             </SwiperSlide>
