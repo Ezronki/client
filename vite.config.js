@@ -13,4 +13,7 @@ export default defineConfig({
   server: {
     historyApiFallback: true, // Ensures the app serves index.html for any route
   },
+  preview: {
+    allowedHosts: ["client-9v46.onrender.com"],
+  },
 });
