@@ -213,7 +213,7 @@ function ShoppingHome() {
           <section className="bg-black py-8">
             <div className="container mx-auto p-6 bg-black rounded-2xl shadow-lg border border-gray-700 overflow-hidden flex flex-wrap">
               {/* Left Column - 66% width on medium screens and up */}
-              <div className="w-full md:w-2/3 pr-3 mb-6 md:mb-0">
+              <div className="w-full md:w-2/3 pr-4 mb-6 md:mb-0">
                 <img
                   src={HeaderImage}
                   alt="Header"
@@ -222,7 +222,7 @@ function ShoppingHome() {
                 />
               </div>
               {/* Right Column - 33% width on medium screens and up */}
-              <div className="w-full md:w-1/3 pl-3 flex items-center justify-center">
+              <div className="w-full md:w-1/3 pl-4 flex items-center justify-center">
                 <img
                   src={SudoImage}
                   alt="Sudo"
