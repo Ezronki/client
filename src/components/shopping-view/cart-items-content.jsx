@@ -6,20 +6,20 @@ import { useToast } from "../ui/use-toast";
 
 function UserCartItemsContent({ cartItem }) {
   const { user } = useSelector((state) => state.auth);
-  const { cartItems } = useSelector((state) => state.shopCart);
+  const { cartItems } = useSelector((state) => state.shopCart); // cartItems is an array
   const { productList } = useSelector((state) => state.shopProducts);
   const dispatch = useDispatch();
   const { toast } = useToast();
 
   function handleUpdateQuantity(getCartItem, typeOfAction) {
-    if (typeOfAction == "plus") {
-      let getCartItems = cartItems.items || [];
-
-      if (getCartItems.length) {
-        const indexOfCurrentCartItem = getCartItems.findIndex(
+    if (typeOfAction === "plus") {
+      // Use cartItems directly since it's an array
+      let getCartItemsArray = cartItems || [];
+      
+      if (getCartItemsArray.length) {
+        const indexOfCurrentCartItem = getCartItemsArray.findIndex(
           (item) => item.productId === getCartItem?.productId
         );
-
         const getCurrentProductIndex = productList.findIndex(
           (product) => product._id === getCartItem?.productId
         );
@@ -28,13 +28,12 @@ function UserCartItemsContent({ cartItem }) {
         console.log(getCurrentProductIndex, getTotalStock, "getTotalStock");
 
         if (indexOfCurrentCartItem > -1) {
-          const getQuantity = getCartItems[indexOfCurrentCartItem].quantity;
+          const getQuantity = getCartItemsArray[indexOfCurrentCartItem].quantity;
           if (getQuantity + 1 > getTotalStock) {
             toast({
               title: `Only ${getQuantity} quantity can be added for this item`,
               variant: "destructive",
             });
-
             return;
           }
         }
@@ -43,7 +42,7 @@ function UserCartItemsContent({ cartItem }) {
 
     dispatch(
       updateCartQuantity({
-        userId: user?.id,
+        userId: user?.id, // or user?._id if that's what your auth state provides
         productId: getCartItem?.productId,
         quantity:
           typeOfAction === "plus"
@@ -88,7 +87,7 @@ function UserCartItemsContent({ cartItem }) {
             disabled={cartItem?.quantity === 1}
             onClick={() => handleUpdateQuantity(cartItem, "minus")}
           >
-            <Minus className="text-black w-4 h-4" />
+            <Minus className="text-black w-4 h-4 !text-black hover:!text-black" />
             <span className="sr-only">Decrease</span>
           </Button>
           <span className="font-semibold">{cartItem?.quantity}</span>
@@ -98,8 +97,8 @@ function UserCartItemsContent({ cartItem }) {
             size="icon"
             onClick={() => handleUpdateQuantity(cartItem, "plus")}
           >
-            <Plus className="text-black w-4 h-4" />
-            <span className="sr-only">Decrease</span>
+            <Plus className="text-black w-4 h-4 !text-black hover:!text-black" />
+            <span className="sr-only">Increase</span>
           </Button>
         </div>
       </div>
