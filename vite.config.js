@@ -14,6 +14,6 @@ export default defineConfig({
     historyApiFallback: true, // Ensures the app serves index.html for any route
   },
   preview: {
-    allowedHosts: ["client-jla8.onrender.com", "www.sudohackers.shop"],
+    allowedHosts: ["client-21tj.onrender.com", "www.sudohackers.shop"],
   },
 });
